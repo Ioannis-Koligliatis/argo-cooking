@@ -1,20 +1,38 @@
----
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: hello
+  name: nginx
+  namespace: ioannis-api
   labels:
-    app: hello
+    app: ioannis-api
+    owner: ioannis
+
 spec:
-  containers:
-  - name: hello
-    image: "paulbouwer/hello-kubernetes:1.10"
-    ports:
-    - containerPort: 8080
-    resources:
-      limits:
-        memory: "128Mi"
-        cpu: "500m"
-      requests:
-        memory: "64Mi"
-        cpu: "250m"
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ioannis-api
+  strategy:
+    type: Recreate
+
+  template:
+    metadata:
+      name: nginx
+      namespace: ioannis-api
+      labels:
+        app: ioannis-api
+        owner: ioannis
+    spec:
+      restartPolicy: Always
+
+      containers:
+        - name: nginx
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+
+
+
+
+
+status:
