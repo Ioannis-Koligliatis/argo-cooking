@@ -1,3 +1,14 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ioannis-api
+  labels:
+    name: ioannis-api
+    owner: ioannis
+
+
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -12,13 +23,9 @@ spec:
   selector:
     matchLabels:
       app: ioannis-api
-  strategy:
-    type: Recreate
 
   template:
     metadata:
-      name: nginx
-      namespace: ioannis-api
       labels:
         app: ioannis-api
         owner: ioannis
